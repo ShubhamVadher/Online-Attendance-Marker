@@ -1,0 +1,13 @@
+signup and login as prof
+signup and login as student
+
+view all classes
+student join a class with a special code
+student mark absent and present when allowed
+see attendense percent
+
+prof
+create class
+allow student to mark and unmark attendense
+see names of all students
+create a day then allow and disallow to mark attendense
