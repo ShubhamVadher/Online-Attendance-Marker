@@ -87,7 +87,7 @@ router.get("/checkattendance/:id", isprofloggedin, async (req, res) => {
             .populate("prof_created")
             .populate({
                 path: "class_details.student_ids", // Path to student_ids within class_details
-                model: "student",
+                
             });
 
         res.render("ChooseDate", { subject });
