@@ -77,6 +77,24 @@ router.post("/joinclass/:id",isstudentloggedin,async(req,res)=>{
 
 })
 
+router.post("/markattendance/:cid",isstudentloggedin,async(req,res)=>{
+    const subject=await subjectmodel.findOne({_id:req.params.cid});
+    if(subject.session_status==true){
+        const x=subject.class_details.length;
+        if(subject.class_details[x-1].student_ids.indexOf(req.user._id)==-1){
 
+            subject.class_details[x-1].student_ids.push(req.user._id);
+            await subject.save();
+            res.redirect(`/student/profile/${req.user._id}`);
+        }
+        else{
+            res.redirect(`/student/profile/${req.user._id}`);    
+        }
+    }
+    else{
+        res.redirect(`/student/profile/${req.user._id}`);
+    }
+    
+})
 
 module.exports=router;

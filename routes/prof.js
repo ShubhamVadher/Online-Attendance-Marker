@@ -80,6 +80,43 @@ router.post("/createsubject/:id",isprofloggedin,async(req,res)=>{
 })
 
 
+router.get("/checkattendance/:id", isprofloggedin, async (req, res) => {
+    try {
+        const subject = await subjectmodel
+            .findOne({ _id: req.params.id })
+            .populate("prof_created")
+            .populate({
+                path: "class_details.student_ids", // Path to student_ids within class_details
+                model: "student",
+            });
+
+        res.render("ChooseDate", { subject });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
+
+router.get("/checkdate/:sid/:did", isprofloggedin, async (req, res) => {
+    const subject = await subjectmodel.findOne({ _id: req.params.sid }).populate({
+        path: "class_details.student_ids",
+        select: "name regno",
+    });
+
+    const classDetail = subject.class_details.find(
+        (detail) => detail._id.toString() === req.params.did
+    );
+
+    if (classDetail) {
+        const students = classDetail.student_ids;
+        res.render("studentlist", { students, subjectName: subject.name });
+    } else {
+        res.status(404).send("Class details not found.");
+    }
+});
+
+
+
 
 
 module.exports=router;

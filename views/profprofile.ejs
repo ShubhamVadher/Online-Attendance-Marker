@@ -42,19 +42,27 @@
         
         <div class="space-y-4 mt-10">
             <% user.subject_created.reverse().forEach((subject) => { %>
-                <div class="flex items-center justify-between bg-white shadow-md rounded-lg p-4 border border-gray-200">
+                <div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
                     <!-- Subject Info -->
-                    <div>
+                    <div class="mb-4">
                         <p class="text-lg font-semibold text-gray-700"><%= subject.name %></p>
                         <p class="text-sm text-gray-500">ID: <%= subject._id %></p>
                     </div>
 
-                    <!-- Attendance Button -->
-                    <form action="/subject/attendance/<%=subject._id%>" method="post">
-                        <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition">
-                            <%= subject.session_status == false ? "Start Attendance" : "Stop Attendance" %>
-                        </button>
-                    </form>
+                    <!-- Action Buttons -->
+                    <div class="flex items-center justify-between">
+                        <!-- Attendance Button -->
+                        <form action="/subject/attendance/<%=subject._id%>" method="post">
+                            <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition">
+                                <%= subject.session_status == false ? "Start Attendance" : "Stop Attendance" %>
+                            </button>
+                        </form>
+
+                        <!-- Check Attendance Link -->
+                        <a href="/prof/checkattendance/<%=subject._id%>" class="bg-gray-100 text-indigo-500 py-2 px-4 rounded-lg hover:bg-gray-200 transition">
+                            Check Attendance
+                        </a>
+                    </div>
                 </div>
             <% }) %>
         </div>
@@ -64,4 +72,6 @@
     
 </body>
 </html>
+
+
 
