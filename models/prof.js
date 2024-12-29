@@ -11,7 +11,7 @@ const profschema=mongoose.Schema({
     regno:{
         type:Number
     },
-    classes_created:[
+    subject_created:[
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:"subject"

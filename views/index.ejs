@@ -15,7 +15,7 @@
         <!-- Student Login -->
         <div class="p-4 border rounded-lg shadow-sm">
           <h3 class="text-2xl font-semibold text-green-600 mb-4 text-center">Student Login</h3>
-          <form action="/api/auth/login-student" method="POST" class="space-y-4">
+          <form action="/student/signin" method="POST" class="space-y-4">
             <input type="email" name="email" placeholder="Email" required
               class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-green-300" />
             <input type="password" name="password" placeholder="Password" required
@@ -26,7 +26,7 @@
         <!-- Professor Login -->
         <div class="p-4 border rounded-lg shadow-sm">
           <h3 class="text-2xl font-semibold text-blue-600 mb-4 text-center">Professor Login</h3>
-          <form action="/api/auth/login-professor" method="POST" class="space-y-4">
+          <form action="/prof/signin" method="POST" class="space-y-4">
             <input type="email" name="email" placeholder="Email" required
               class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300" />
             <input type="password" name="password" placeholder="Password" required
@@ -47,7 +47,7 @@
         <!-- Student Signup -->
         <div class="p-4 border rounded-lg shadow-sm">
           <h3 class="text-2xl font-semibold text-green-600 mb-4 text-center">Student Signup</h3>
-          <form action="/api/auth/signup-student" method="POST" class="space-y-4">
+          <form action="/student/signup" method="POST" class="space-y-4">
             <input type="text" name="name" placeholder="Name" required
               class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-green-300" />
             <input type="email" name="email" placeholder="Email" required

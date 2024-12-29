@@ -10,7 +10,7 @@ module.exports.isprofloggedin=async(req,res,next)=>{
             return res.redirect("/?errorlogin=You Need To login First");
         }
         else{
-            const data=jwt.verify(req.cookies.token,process.env.jet_key);
+            const data=jwt.verify(req.cookies.token,process.env.jwt_key);
             const user=await profmodel.findOne({_id:data.id});
             if(user){
                 req.user=user;
@@ -29,7 +29,7 @@ module.exports.isstudentloggedin=async(req,res,next)=>{
             return res.redirect("/?errorlogin=You Need To login First");
         }
         else{
-            const data=jwt.verify(req.cookies.token,process.env.jet_key);
+            const data=jwt.verify(req.cookies.token,process.env.jwt_key);
             const user=await studentmodel.findOne({_id:data.id});
             if(user){
                 req.user=user;

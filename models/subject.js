@@ -6,9 +6,13 @@ const subjectschema = mongoose.Schema({
         required: true
     },
     
-    prof_created: {
+    prof_created:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "prof" 
+    },
+    session_status:{
+        type:Boolean,
+        default:false
     },
     class_details: [
         {

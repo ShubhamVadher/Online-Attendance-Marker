@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Class</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main Container -->
+    <div class="max-w-md mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-bold text-gray-800 text-center mb-6">Professor Dashboard</h1>
+
+        <!-- Professor Info -->
+        <div class="mb-6">
+            <p class="text-gray-700 text-lg font-medium">
+                <span class="font-bold">Name:</span> <%= user.name %>
+            </p>
+            <p class="text-gray-700 text-lg font-medium">
+                <span class="font-bold">Registration Number:</span> <%= user.regno %>
+            </p>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="text-right mb-4">
+            <a href="/prof/logout/<%=user._id%>" 
+               class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">
+               Logout
+            </a>
+        </div>
+
+        <!-- Create Class Button -->
+        <div class="text-center">
+            <form action="/prof/createsubject/<%= user._id %>" method="post" class="space-y-4">
+                <input type="text" name="name" placeholder="Enter Subject Name" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"/>
+                <button class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition w-full">Create New Class</button>
+            </form>
+        </div>
+
+        <!-- Subject List -->
+        
+        <div class="space-y-4 mt-10">
+            <% user.subject_created.reverse().forEach((subject) => { %>
+                <div class="flex items-center justify-between bg-white shadow-md rounded-lg p-4 border border-gray-200">
+                    <!-- Subject Info -->
+                    <div>
+                        <p class="text-lg font-semibold text-gray-700"><%= subject.name %></p>
+                        <p class="text-sm text-gray-500">ID: <%= subject._id %></p>
+                    </div>
+
+                    <!-- Attendance Button -->
+                    <form action="/subject/attendance/<%=subject._id%>" method="post">
+                        <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition">
+                            <%= subject.session_status == false ? "Start Attendance" : "Stop Attendance" %>
+                        </button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+
+        
+    </div>
+    
+</body>
+</html>
+

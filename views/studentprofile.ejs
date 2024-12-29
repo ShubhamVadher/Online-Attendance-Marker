@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Main Container -->
+    <div class="max-w-lg mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
+        <!-- Header -->
+        <h1 class="text-2xl font-bold text-gray-800 text-center mb-6">Student Dashboard</h1>
+
+        <!-- Student Info -->
+        <div class="mb-6">
+            <p class="text-gray-700 text-lg font-medium">
+                <span class="font-bold">Name:</span> <%= student.name %>
+            </p>
+            <p class="text-gray-700 text-lg font-medium">
+                <span class="font-bold">Email:</span> <%= student.email %>
+            </p>
+            <p class="text-gray-700 text-lg font-medium">
+                <span class="font-bold">Registration Number:</span> <%= student.regno %>
+            </p>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="text-right mb-4">
+            <a href="/student/logout/<%=student._id%>" 
+               class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">
+               Logout
+            </a>
+        </div>
+
+        
+        <div class="mt-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Join a Class</h2>
+            <form action="/student/joinclass/<%=student._id%>" method="post" class="space-y-4">
+                <input type="text" name="classId" placeholder="Enter Class ID" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700" required />
+                <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition w-full"> Join Class
+                </button>
+            </form>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Enrolled Classes</h2>
+            <% if (student.classes_enrolled.length > 0) { %>
+                <ul class="space-y-4">
+                    <% student.classes_enrolled.forEach((classItem) => { %>
+                        <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200 flex items-center justify-between">
+                            <!-- Class Info -->
+                            <div>
+                                <p class="text-lg font-semibold text-gray-700"><%= classItem.name %></p>
+                                <p class="text-sm text-gray-500">Class ID: <%= classItem._id %></p>
+                            </div>
+        
+                            <!-- Mark Attendance Button -->
+                            <form action="/student/markattendance/<%=classItem._id%>/<%=student._id%>">
+                                <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition">
+                                    Mark Attendance
+                                </button>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p class="text-gray-500">You are not enrolled in any classes.</p>
+            <% } %>
+        </div>
+        
+        
+
+
+    </div>
+</body>
+</html>
+

@@ -1,8 +1,10 @@
 const express=require("express");
 const router=express.Router();
-const studentmodel=require("../models/prof");
+const studentmodel=require("../models/student");
+const subjectmodel=require("../models/subject");
 const bcrypt=require("bcrypt");
 const {tokengenerator}=require("../utils/tokengenerator");
+const {isstudentloggedin}=require("../middlewares/isloggedin");
 
 router.post("/signup",async(req,res)=>{
     try{
@@ -18,10 +20,10 @@ router.post("/signup",async(req,res)=>{
             
             bcrypt.genSalt(12,(err,salt)=>{
                 bcrypt.hash(password,salt,async(err,hash)=>{
-                    const prof=await studentmodel.create({name,email,regno,password:hash,cpassword:hash});
-                    const token=tokengenerator(prof);
+                    const student=await studentmodel.create({name,email,regno,password:hash,cpassword:hash});
+                    const token=tokengenerator(student);
                     res.cookie("token",token);
-                    return res.redirect("/student/profile");
+                    return res.redirect(`/student/profile/${student._id}`);
                 })
             })
             
@@ -39,9 +41,9 @@ router.post("/signin",async(req,res)=>{
         if(student){
             const result=await bcrypt.compare(password,student.password);
             if(result){
-                const token=tokengenerator(prof);
+                const token=tokengenerator(student);
                 res.cookie("token",token);
-                return res.redirect("/prof/proflie")
+                return res.redirect(`/student/profile/${student._id}`)
             }
             else{
                 return res.redirect("/?signinerror=Email OR Password is wrong")
@@ -53,6 +55,28 @@ router.post("/signin",async(req,res)=>{
         console.log("Something went Wrong ",err)
     }
 })
+
+router.get("/profile/:id",isstudentloggedin,async(req,res)=>{
+    await req.user.populate("classes_enrolled");
+    await req.user.save();
+    
+    res.render("studentprofile",{student:req.user});;
+})
+
+
+router.get("/logout/:id",isstudentloggedin,(req,res)=>{
+    res.cookie("token","");
+    res.redirect("/");
+})
+
+router.post("/joinclass/:id",isstudentloggedin,async(req,res)=>{
+    const student=await studentmodel.findOne({_id:req.params.id});
+    student.classes_enrolled.push(req.body.classId);
+    await student.save();
+    res.redirect(`/student/profile/${req.params.id}`);
+
+})
+
 
 
 module.exports=router;
