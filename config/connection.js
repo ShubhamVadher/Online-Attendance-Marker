@@ -1,7 +1,6 @@
 const mongoose=require("mongoose");
 
 const uri=process.env.uri;
-
 mongoose.connect(uri)
 .then(()=>{
     console.log("Connected to DB");

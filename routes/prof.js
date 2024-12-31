@@ -46,10 +46,10 @@ router.post("/signin",async(req,res)=>{
                 return res.redirect(`/prof/profile/${prof._id}`)
             }
             else{
-                return res.redirect("/?signinerror=Email OR Password is wrong")
+                return res.redirect("/?errorsignin=Email OR Password is wrong")
             }
         }
-        return res.redirect("/?signinerror=Email OR Password is wrong")
+        return res.redirect("/?errorsignin=Email OR Password is wrong")
     }
     catch(err){
         console.log("Something went Wrong ",err)
