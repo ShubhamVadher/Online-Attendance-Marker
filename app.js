@@ -18,6 +18,10 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,"public")));
 app.set("view engine","ejs");
 app.use(cookieparser());
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store'); // Prevent caching of sensitive pages
+    next();
+});
 
 app.use("/",home);
 app.use("/prof",prof);
