@@ -7,7 +7,7 @@ const studentmodel=require("../models/student");
 module.exports.isprofloggedin=async(req,res,next)=>{
     try{
         if(!req.cookies.token||req.cookies.token==""){
-            return res.redirect("/?errorlogin=You Need To login First");
+            return res.redirect("/proflogin?errorsignin=You Need To login First");
         }
         else{
             const data=jwt.verify(req.cookies.token,process.env.jwt_key);
