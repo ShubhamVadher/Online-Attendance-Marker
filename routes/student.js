@@ -11,10 +11,10 @@ router.post("/signup",async(req,res)=>{
         const {name,email,regno,password,cpassword}=req.body;
         const student=await studentmodel.findOne({email});
         if(student){
-            return res.status(400).redirect("/?errorsignup=User with this Email Already Exists");
+            return res.status(400).redirect("/studentsignup?errorsignup=User with this Email Already Exists");
         }
         if(password!=cpassword){
-            return res.status(400).redirect("/?errorsignup=Password and Confirm Password Does Not Match");
+            return res.status(400).redirect("/studentsignup?errorsignup=Password and Confirm Password Does Not Match");
         }
         else{
             
