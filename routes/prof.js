@@ -11,10 +11,10 @@ router.post("/signup",async(req,res)=>{
         const {name,email,regno,password,cpassword}=req.body;
         const prof=await profmodel.findOne({email});
         if(prof){
-            return res.status(400).redirect("/?errorsignup=User with this Email Already Exists");
+            return res.status(400).redirect("/profsignup?errorsignup=User with this Email Already Exists");
         }
         if(password!=cpassword){
-            return res.status(400).redirect("/?errorsignup=Password and Confirm Password Does Not Match");
+            return res.status(400).redirect("/profsignup?errorsignup=Password and Confirm Password Does Not Match");
         }
         else{
             
@@ -46,16 +46,15 @@ router.post("/signin",async(req,res)=>{
                 return res.redirect(`/prof/profile/${prof._id}`)
             }
             else{
-                return res.redirect("/?errorsignin=Email OR Password is wrong")
+                return res.redirect("/proflogin?errorsignin=Email OR Password is wrong")
             }
         }
-        return res.redirect("/?errorsignin=Email OR Password is wrong")
+        return res.redirect("/proflogin?errorsignin=Email OR Password is wrong")
     }
     catch(err){
         console.log("Something went Wrong ",err)
     }
 })
-
 router.get("/profile/:id",isprofloggedin,async(req,res)=>{
     await req.user.populate("subject_created");
     await req.user.save();
